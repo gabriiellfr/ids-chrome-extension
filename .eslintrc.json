@@ -1,0 +1,27 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "globals": {
+        "chrome": true,
+        "localStorage": true
+    },
+    "parserOptions": {
+        "ecmaVersion": 2017
+    },
+    "rules": {
+        "semi": [2, "always"],
+        "quotes": [2, "double"],
+        "indent": ["error", 4, { "SwitchCase": 1 }],
+        "one-var": ["error", "consecutive"],
+        "space-before-function-paren": [
+            "error",
+            {
+                "anonymous": "always",
+                "named": "never",
+                "asyncArrow": "always"
+            }
+        ]
+    }
+}
