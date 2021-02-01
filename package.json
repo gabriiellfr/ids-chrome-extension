@@ -1,6 +1,6 @@
 {
     "name": "ids-chrome-extension",
-    "version": "0.0.1",
+    "version": "0.0.2",
     "description": "",
     "scripts": {
         "start": "gulp --watch",
@@ -10,6 +10,7 @@
     "author": "",
     "license": "ISC",
     "devDependencies": {
+        "del": "^6.0.0",
         "gulp": "^4.0.2",
         "gulp-clean": "^0.4.0",
         "gulp-cleanhtml": "^1.0.3",
@@ -23,5 +24,7 @@
         "jshint": "^2.12.0",
         "yargs": "^16.2.0"
     },
-    "dependencies": {}
+    "dependencies": {
+        "axios": "^0.21.1"
+    }
 }

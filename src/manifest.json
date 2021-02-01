@@ -1,13 +1,23 @@
 {
-    "version": "0.1",
+    "version": "0.0.2",
     "name": "ids-chrome-extension",
     "background": {
-        "scripts": ["js/plugins/jquery.min.js", "js/background.js"]
+        "matches": ["http://*/*", "https://*/*"],
+        "scripts": [
+            "js/plugins/jquery.min.js",
+            "js/plugins/axios.min.js",
+            "js/background.js"
+        ]
     },
     "content_scripts": [
         {
             "matches": ["http://*/*", "https://*/*"],
-            "js": ["js/plugins/jquery.min.js", "js/contentScript.js"]
+            "js": [
+                "js/plugins/jquery.min.js",
+                "js/plugins/axios.min.js",
+                "js/contentScript.js"
+            ],
+            "all_frames": true
         }
     ],
     "browser_action": {

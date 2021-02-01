@@ -17,9 +17,10 @@ section {
 }
 
 /* Basic style tweaks */
-section {
-    padding: 5px;
+.user-card {
+
 }
+
 .navbar {
     margin-bottom: 2px;
 }
@@ -31,4 +32,8 @@ section {
 ::-webkit-scrollbar-thumb,
 ::-webkit-scrollbar-thumb:window-inactive {
     background: red;
+}
+
+#monitorTimer {
+    width: 70px;
 }

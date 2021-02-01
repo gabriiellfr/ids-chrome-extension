@@ -1,3 +1,5 @@
+console.log("loading bg");
+
 const messenger = (cmd, sender, callback) => {
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
             chrome.tabs.sendMessage(tabs[0].id, cmd, sender, result => {
@@ -10,44 +12,30 @@ const messenger = (cmd, sender, callback) => {
         });
     },
     handlerStorageVars = (name, data) => {
-        messenger("Starting var: " + name, null);
-
-        if (!localStorage[name]) localStorage.name = data;
+        if (!localStorage[name]) localStorage[name] = data;
     },
     initStorage = () => {
-        messenger("Init storage", null);
-
         handlerStorageVars("monitorStatus", false);
         handlerStorageVars("monitorTimer", 2000);
     },
-    init = () => {
-        messenger("Starting", null);
+    checkFlag = () => {
+        setTimeout(() => {
+            if (
+                localStorage.monitorStatus === "true" &&
+                localStorage.monitorTimer
+            ) {
+                messenger("sendClick", null);
+            }
 
+            checkFlag();
+        }, localStorage.monitorTimer || 5000);
+    },
+    init = () => {
         initStorage();
         checkFlag();
     };
 
 $(() => {
-    messenger(
-        `Monitoring (${localStorage.monitorTimer}): ${localStorage.monitorStatus}`,
-        null
-    );
     init();
+    console.log("ready");
 });
-
-const checkFlag = () => {
-    setTimeout(() => {
-        if (
-            localStorage.monitorStatus === "true" &&
-            localStorage.monitorTimer
-        ) {
-            messenger("sendClick", null);
-            messenger(
-                `Monitoring (${localStorage.monitorTimer}): ${localStorage.monitorStatus}`,
-                null
-            );
-        }
-
-        checkFlag();
-    }, localStorage.monitorTimer);
-};
