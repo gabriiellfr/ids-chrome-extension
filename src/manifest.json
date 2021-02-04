@@ -2,12 +2,20 @@
     "version": "0.0.3",
     "name": "ids-chrome-extension",
     "background": {
-        "matches": ["http://127.0.0.1:8887/"],
+        "matches": [
+            "https://itdirect.wdf.sap.corp/*",
+            "https://accounts.sap.com/*",
+            "https://accounts400.sap.com/*"
+        ],
         "scripts": ["background.bundle.js"]
     },
     "content_scripts": [
         {
-            "matches": ["http://127.0.0.1:8887/"],
+            "matches": [
+                "https://itdirect.wdf.sap.corp/*",
+                "https://accounts.sap.com/*",
+                "https://accounts400.sap.com/*"
+            ],
             "js": ["contentScript.bundle.js"],
             "all_frames": true
         }

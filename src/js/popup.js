@@ -30,8 +30,6 @@ const init = () => {
     },
     fn = (env, dev) => {
         utils.getUsersId(env, (err, codes) => {
-            console.log(err, codes, "getUsersId popup");
-
             if (err) {
                 $("#loading").addClass("d-none");
                 $("#error").removeClass("d-none");
@@ -40,14 +38,10 @@ const init = () => {
             }
 
             utils.getProfiles(codes, env, dev, (err, profiles) => {
-                console.log(err, profiles, "getProfiles popup");
-
-                console.log(err, profiles, "hereHXXXX");
-
                 $("#loading").addClass("d-none");
-                if (err) console.log(err, profiles, "hereHH");
+                if (err) $("#error").removeClass("d-none");
 
-                if (!utils.buildCards(profiles))
+                if (!utils.buildCards(profiles, env))
                     $("#error").removeClass("d-none");
             });
         });
@@ -56,5 +50,6 @@ const init = () => {
 $(() => {
     init();
 
-    fn("PRD", true);
+    fn("PRD", false);
+    fn("QA", false);
 });

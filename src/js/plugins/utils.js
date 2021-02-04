@@ -38,13 +38,13 @@ const Utils = {
                 return callback(error);
             });
     },
-    card(data) {
-        return `<div class="col-sm-12">
+    card(data, env) {
+        return `<div class="col-sm-6">
                     <div class="card">
                         <div class="card-body">
-                            <h5 class="card-title">
-                                ${data.display_name} (${data.uid})
-                            </h5>
+                            <h6 class="card-title">
+                                ${data.display_name} (${data.uid}) ${env}
+                            </h6>
                             <p class="card-text">
                                 TOTP: ${data.otp_enabled}
                             </p>
@@ -56,13 +56,11 @@ const Utils = {
                     </div>
                 </div>`;
     },
-    buildCards(profiles) {
-        console.log(profiles, "hereBB");
-
+    buildCards(profiles, env) {
         if (profiles.length == 0) return false;
 
         profiles.forEach(profile => {
-            const card = this.card(profile);
+            const card = this.card(profile, env);
 
             $("#results").append(card);
         });
@@ -70,20 +68,14 @@ const Utils = {
         return true;
     },
     getUsersId(env, callback) {
-        console.log(env, "getUsersId utils");
-
         this.messenger("getCodes", null, (err, res) => {
-            console.log(err, res, "messenger->getuserid");
-
             if (err || res.length == 0)
                 return callback("ERROR 781 LOOK FOR ME");
 
             return callback(null, res);
         });
     },
-    getProfiles(codes = [], env = "QA", dev = true, callback) {
-        console.log(codes, "hereYY");
-
+    async getProfiles(codes = [], env = "QA", dev = true, callback) {
         if (!codes || codes.length == 0)
             return callback("ERROR1: No codes found!");
 
@@ -102,7 +94,7 @@ const Utils = {
                     otp_failed_login_attempts: 0
                 });
             else
-                this.get(apiURL, (err, profile) => {
+                await this.get(apiURL, (err, profile) => {
                     if (err) return callback("ERROR2: No codes found!");
 
                     profiles.push(profile);

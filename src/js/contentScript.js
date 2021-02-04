@@ -11,7 +11,7 @@ chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
 
             if (typeof button != "undefined" && button != null && button) {
                 button.click();
-                button.value = `Searching (${new Date().getSeconds()})`;
+                button.innerText = `Searching (${new Date().getSeconds()})`;
             }
 
             sendResponse({
@@ -22,7 +22,9 @@ chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
             const codes = [];
 
             csOpts.userCodes.forEach(userC => {
-                userC.value = utils.querySelector(userC.input).value;
+                userC.value = utils.querySelector(userC.input).innerHTML;
+
+                console.log(userC);
 
                 if (
                     codes.length > 0 &&

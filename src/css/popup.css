@@ -26,10 +26,6 @@ section {
 ::-webkit-scrollbar {
     width: 6px;
 }
-::-webkit-scrollbar-thumb,
-::-webkit-scrollbar-thumb:window-inactive {
-    background: red;
-}
 
 #monitorTimer {
     width: 70px;
