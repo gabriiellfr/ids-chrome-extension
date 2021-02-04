@@ -3,6 +3,8 @@ console.log("popup script loaded!!");
 import $ from "jquery";
 import utils from "./plugins/utils";
 
+import "../css/popup.css";
+
 const init = () => {
         $("#monitorStatus").prop(
             "checked",
@@ -26,8 +28,10 @@ const init = () => {
             localStorage.monitorTimer = $("#monitorTimer").val();
         });
     },
-    fn = env => {
+    fn = (env, dev) => {
         utils.getUsersId(env, (err, codes) => {
+            console.log(err, codes, "getUsersId popup");
+
             if (err) {
                 $("#loading").addClass("d-none");
                 $("#error").removeClass("d-none");
@@ -35,9 +39,13 @@ const init = () => {
                 return;
             }
 
-            utils.getProfiles(codes, env, (err, profiles) => {
+            utils.getProfiles(codes, env, dev, (err, profiles) => {
+                console.log(err, profiles, "getProfiles popup");
+
+                console.log(err, profiles, "hereHXXXX");
+
                 $("#loading").addClass("d-none");
-                if (err) return $("#error").removeClass("d-none");
+                if (err) console.log(err, profiles, "hereHH");
 
                 if (!utils.buildCards(profiles))
                     $("#error").removeClass("d-none");
@@ -48,5 +56,5 @@ const init = () => {
 $(() => {
     init();
 
-    fn("QA");
+    fn("PRD", true);
 });

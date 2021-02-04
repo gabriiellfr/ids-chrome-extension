@@ -3,8 +3,6 @@ console.log("loading utils");
 import $ from "jquery";
 import axios from "axios";
 
-import "../../css/popup.css";
-
 const Utils = {
     messenger(cmd, sender, callback) {
         chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
@@ -59,6 +57,8 @@ const Utils = {
                 </div>`;
     },
     buildCards(profiles) {
+        console.log(profiles, "hereBB");
+
         if (profiles.length == 0) return false;
 
         profiles.forEach(profile => {
@@ -70,16 +70,22 @@ const Utils = {
         return true;
     },
     getUsersId(env, callback) {
+        console.log(env, "getUsersId utils");
+
         this.messenger("getCodes", null, (err, res) => {
+            console.log(err, res, "messenger->getuserid");
+
             if (err || res.length == 0)
                 return callback("ERROR 781 LOOK FOR ME");
 
             return callback(null, res);
         });
     },
-    getProfiles(codes = [], env = "QA", callback) {
+    getProfiles(codes = [], env = "QA", dev = true, callback) {
+        console.log(codes, "hereYY");
+
         if (!codes || codes.length == 0)
-            return callback("ERROR: No codes found!");
+            return callback("ERROR1: No codes found!");
 
         const profiles = [];
 
@@ -87,11 +93,20 @@ const Utils = {
             if (!codes[key]) return;
 
             const apiURL = this.apiURL(codes[key].value, env);
-            this.get(apiURL, (err, profile) => {
-                if (err) return;
 
-                profiles.push(profile);
-            });
+            if (dev)
+                profiles.push({
+                    display_name: "Gabriel Dev",
+                    uid: codes[key].value,
+                    otp_enabled: true,
+                    otp_failed_login_attempts: 0
+                });
+            else
+                this.get(apiURL, (err, profile) => {
+                    if (err) return callback("ERROR2: No codes found!");
+
+                    profiles.push(profile);
+                });
         }
 
         return callback(null, profiles);
