@@ -22,7 +22,7 @@ npm install
 npm start
 ```
 
-- Build from gulp
+- Build from webpack
 
 ```
 npm run build

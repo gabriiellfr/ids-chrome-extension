@@ -1,13 +1,17 @@
 console.log("loading content script");
 
+import utils from "./plugins/utils";
+
+const csOpts = utils.contentScriptOpts();
+
 chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
     switch (cmd) {
         case "sendClick":
-            var button = document.querySelector("[id$='SEARCH_BTN']");
+            const button = utils.querySelector(csOpts.searchBTN);
 
             if (typeof button != "undefined" && button != null && button) {
                 button.click();
-                button.innerText = "***Searchig";
+                button.value = `Searching (${new Date().getSeconds()})`;
             }
 
             sendResponse({
@@ -15,24 +19,18 @@ chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
             });
             break;
         case "getCodes":
-            var queryIDs = [
-                    { name: "reporter", id: "zbtpartnerrep_struct.partner_no" },
-                    { name: "requester", id: "zbtpartnerreq_struct.partner_no" }
-                ],
-                codes = [];
+            const codes = [];
 
-            queryIDs.forEach(query => {
-                // if (document.querySelector(`[id$='${query.id}']`) == null)
-                //return;
+            csOpts.userCodes.forEach(userC => {
+                userC.value = utils.querySelector(userC.input).value;
 
-                query.value = document.querySelector(
-                    `[id$='${query.id}']`
-                ).innerHTML;
-
-                if (query.name == "requester" && codes[0].value == query.value)
+                if (
+                    codes.length > 0 &&
+                    codes.find(code => code.value === userC.value)
+                )
                     return;
 
-                codes.push(query);
+                codes.push(userC);
             });
 
             sendResponse(codes);

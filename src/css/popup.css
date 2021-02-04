@@ -1,3 +1,5 @@
+@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
+
 /**
  * Chrome Extension Twitter Bootstrap 3 Template
  * Custom CSS
@@ -14,11 +16,6 @@ section {
 #results,
 #error {
     width: 600px;
-}
-
-/* Basic style tweaks */
-.user-card {
-
 }
 
 .navbar {

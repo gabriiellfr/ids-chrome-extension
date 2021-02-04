@@ -3,26 +3,22 @@
     <head>
         <meta charset="utf-8" />
         <title>SAP-TFA-EXTENSION</title>
-        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen" />
-        <link href="css/popup.css" rel="stylesheet" media="screen" />
     </head>
 
     <body>
         <nav class="navbar navbar-light bg-light">
             <div class="container-fluid">
                 <a class="navbar-brand">IDS Helper</a>
-                <form class="d-flex">
-                    <div class="form-check form-switch">
-                        <input
-                            class="form-check-input"
-                            type="checkbox"
-                            id="monitorStatus"
-                        />
+                <div class="form-check form-switch">
+                    <input
+                        class="form-check-input"
+                        type="checkbox"
+                        id="monitorStatus"
+                    />
 
-                        <input type="number" id="monitorTimer" />
-                        <button id="saveTimer">Ok</button>
-                    </div>
-                </form>
+                    <input type="number" id="monitorTimer" />
+                    <button id="saveTimer">Ok</button>
+                </div>
             </div>
         </nav>
 
@@ -41,11 +37,5 @@
                 </div>
             </div>
         </section>
-
-        <script src="js/plugins/axios.min.js"></script>
-        <script src="js/plugins/jquery.min.js"></script>
-        <script src="js/plugins/bootstrap.min.js"></script>
-        <script src="js/ecosystem.config.js"></script>
-        <script src="js/popup.js"></script>
     </body>
 </html>

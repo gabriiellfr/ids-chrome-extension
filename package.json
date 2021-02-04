@@ -1,30 +1,28 @@
 {
     "name": "ids-chrome-extension",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "description": "",
     "scripts": {
-        "start": "gulp --watch",
-        "build": "gulp"
+        "build": "node utils/build.js",
+        "start": "node utils/webserver.js"
     },
-    "keywords": [],
-    "author": "",
-    "license": "ISC",
+    "author": "Gabriel Santos",
     "devDependencies": {
-        "del": "^6.0.0",
-        "gulp": "^4.0.2",
-        "gulp-clean": "^0.4.0",
-        "gulp-cleanhtml": "^1.0.3",
-        "gulp-eslint": "^6.0.0",
-        "gulp-jshint": "^2.1.0",
-        "gulp-merge-json": "^2.1.1",
-        "gulp-minify-css": "^1.2.4",
-        "gulp-strip-debug": "^3.0.0",
-        "gulp-uglify": "^3.0.2",
-        "gulp-zip": "^5.0.2",
-        "jshint": "^2.12.0",
-        "yargs": "^16.2.0"
+        "clean-webpack-plugin": "3.0.0",
+        "copy-webpack-plugin": "5.0.5",
+        "css-loader": "3.2.0",
+        "file-loader": "4.3.0",
+        "fs-extra": "8.1.0",
+        "html-loader": "0.5.5",
+        "html-webpack-plugin": "3.2.0",
+        "style-loader": "1.0.0",
+        "webpack": "4.41.2",
+        "webpack-dev-server": "3.9.0",
+        "write-file-webpack-plugin": "4.5.1",
+        "webpack-cli": "3.3.10"
     },
     "dependencies": {
-        "axios": "^0.21.1"
+        "axios": "^0.21.1",
+        "jquery": "^3.5.1"
     }
 }

@@ -1,17 +1,9 @@
 console.log("loading bg");
 
-const messenger = (cmd, sender, callback) => {
-        chrome.tabs.query({ active: true, lastFocusedWindow: true }, tabs => {
-            chrome.tabs.sendMessage(tabs[0].id, cmd, sender, result => {
-                try {
-                    return callback(null, result);
-                } catch (error) {
-                    return callback(error);
-                }
-            });
-        });
-    },
-    handlerStorageVars = (name, data) => {
+import $ from "jquery";
+import utils from "./plugins/utils";
+
+const handlerStorageVars = (name, data) => {
         if (!localStorage[name]) localStorage[name] = data;
     },
     initStorage = () => {
@@ -24,7 +16,8 @@ const messenger = (cmd, sender, callback) => {
                 localStorage.monitorStatus === "true" &&
                 localStorage.monitorTimer
             ) {
-                messenger("sendClick", null);
+                utils.messenger("sendClick", null);
+                utils.messenger("clicksent2", null);
             }
 
             checkFlag();
