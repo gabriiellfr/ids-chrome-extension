@@ -1,10 +1,10 @@
 {
     "name": "ids-chrome-extension",
-    "version": "0.0.3",
+    "version": "0.0.4",
     "description": "ids-chrome-extension",
     "scripts": {
-        "build": "node utils/build.js",
-        "start": "node utils/webserver.js"
+        "build": "SET NODE_ENV=production && node utils/build.js",
+        "start": "SET NODE_ENV=development && node utils/webserver.js"
     },
     "author": "Gabriel Santos",
     "devDependencies": {
@@ -24,6 +24,7 @@
     "dependencies": {
         "axios": "^0.21.1",
         "bootstrap": "^4.6.0",
+        "font-awesome": "^4.7.0",
         "jquery": "^3.5.1"
     }
 }

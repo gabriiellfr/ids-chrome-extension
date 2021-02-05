@@ -1,44 +1,68 @@
 console.log("loading content script");
 
-import utils from "./plugins/utils";
+import Utils from "./plugins/utils.services";
 
-const csOpts = utils.contentScriptOpts();
+class ContentScript extends Utils {
+    constructor() {
+        super();
 
-chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
-    switch (cmd) {
-        case "sendClick":
-            const button = utils.querySelector(csOpts.searchBTN);
+        this.searchBTN = this._env[this._env.node_env].adm.elements.searchbtn;
+        this.codes = this._env[this._env.node_env].adm.elements.codes;
 
-            if (typeof button != "undefined" && button != null && button) {
-                button.click();
-                button.innerText = `Searching (${new Date().getSeconds()})`;
-            }
-
-            sendResponse({
-                status: "Click Sent"
-            });
-            break;
-        case "getCodes":
-            const codes = [];
-
-            csOpts.userCodes.forEach(userC => {
-                userC.value = utils.querySelector(userC.input).innerHTML;
-
-                console.log(userC);
-
-                if (
-                    codes.length > 0 &&
-                    codes.find(code => code.value === userC.value)
-                )
-                    return;
-
-                codes.push(userC);
-            });
-
-            sendResponse(codes);
-            break;
-        default:
-            console.log(cmd);
-            sendResponse(null);
+        this.addListener();
     }
-});
+
+    addListener() {
+        console.log("adding listener fn");
+
+        chrome.runtime.onMessage.addListener((cmd, sender, sendResponse) => {
+            switch (cmd) {
+                case "sendClick":
+                    const button = this.querySelector(this.searchBTN.id);
+
+                    if (
+                        typeof button != "undefined" &&
+                        button != null &&
+                        button
+                    ) {
+                        button.click();
+                        button[
+                            this.searchBTN.field
+                        ] = `Searching (${new Date().getSeconds()})`;
+                    }
+
+                    sendResponse({
+                        status: "Click Sent"
+                    });
+                    break;
+                case "getCodes":
+                    const codes = [];
+
+                    this.codes.forEach(userC => {
+                        userC.value = this.querySelector(userC.input)[
+                            userC.field
+                        ];
+
+                        console.log(userC);
+
+                        if (
+                            codes.length > 0 &&
+                            (codes.find(code => code.value === userC.value) ||
+                                userC.value == "")
+                        )
+                            return;
+
+                        codes.push(userC);
+                    });
+
+                    sendResponse(codes);
+                    break;
+                default:
+                    console.log(cmd);
+                    sendResponse(null);
+            }
+        });
+    }
+}
+
+export default new ContentScript();

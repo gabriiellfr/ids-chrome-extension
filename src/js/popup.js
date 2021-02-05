@@ -1,55 +1,28 @@
 console.log("popup script loaded!!");
 
-import $ from "jquery";
-import utils from "./plugins/utils";
+import usersService from "./plugins/users.service";
 
 import "../css/popup.css";
 
-const init = () => {
-        $("#monitorStatus").prop(
-            "checked",
-            localStorage.monitorStatus === "true"
-        );
-        $("#monitorTimer").val(localStorage.monitorTimer);
+class PopupScript extends usersService {
+    constructor() {
+        super();
 
-        $("#loading").removeClass("d-none");
-        $("#error").addClass("d-none");
+        this.popupInitFn();
+        this.start();
+    }
 
-        $("#monitorStatus").on("change", () => {
-            localStorage.monitorStatus = $("#monitorStatus").is(":checked");
-        });
+    start() {
+        console.log("starting popup script");
 
-        $("#saveTimer").on("click", () => {
-            if (parseInt($("#monitorTimer").val()) < 2000)
-                $("#monitorTimer").val(2000);
-            if (parseInt($("#monitorTimer").val()) > 5000)
-                $("#monitorTimer").val(5000);
+        this.getUsersId((err, codes) => {
+            if (err) return this.hideLoading(err);
 
-            localStorage.monitorTimer = $("#monitorTimer").val();
-        });
-    },
-    fn = (env, dev) => {
-        utils.getUsersId(env, (err, codes) => {
-            if (err) {
-                $("#loading").addClass("d-none");
-                $("#error").removeClass("d-none");
-
-                return;
-            }
-
-            utils.getProfiles(codes, env, dev, (err, profiles) => {
-                $("#loading").addClass("d-none");
-                if (err) $("#error").removeClass("d-none");
-
-                if (!utils.buildCards(profiles, env))
-                    $("#error").removeClass("d-none");
+            this.getProfiles(codes, (err, profiles) => {
+                return this.hideLoading(err || this.buildCards(profiles));
             });
         });
-    };
+    }
+}
 
-$(() => {
-    init();
-
-    fn("PRD", false);
-    fn("QA", false);
-});
+export default new PopupScript();

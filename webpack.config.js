@@ -28,7 +28,7 @@ if (fileSystem.existsSync(secretsPath)) {
 }
 
 const options = {
-    mode: process.env.NODE_ENV || "development",
+    mode: process.env.NODE_ENV.trim() || "development",
     entry: {
         popup: path.join(__dirname, "src", "js", "popup.js"),
         background: path.join(__dirname, "src", "js", "background.js"),
@@ -47,8 +47,7 @@ const options = {
             },
             {
                 test: new RegExp(".(" + fileExtensions.join("|") + ")$"),
-                loader: "file-loader?name=[name].[ext]",
-                exclude: /node_modules/
+                loader: "file-loader?name=[name].[ext]"
             },
             {
                 test: /\.html$/,

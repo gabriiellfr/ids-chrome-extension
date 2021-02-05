@@ -1,34 +1,43 @@
-console.log("loading bg");
+console.log("loading background script");
 
-import $ from "jquery";
-import utils from "./plugins/utils";
+import Utils from "./plugins/utils.services";
 
-const handlerStorageVars = (name, data) => {
+class BackgroundScript extends Utils {
+    constructor() {
+        super();
+
+        this.init();
+    }
+
+    init() {
+        console.log("init background script");
+
+        this.initStorage();
+        this.checkFlag();
+    }
+
+    handlerStorageVars(name, data) {
         if (!localStorage[name]) localStorage[name] = data;
-    },
-    initStorage = () => {
-        handlerStorageVars("monitorStatus", false);
-        handlerStorageVars("monitorTimer", 2000);
-    },
-    checkFlag = () => {
+    }
+
+    initStorage() {
+        this.handlerStorageVars("monitorStatus", false);
+        this.handlerStorageVars("monitorTimer", 2000);
+    }
+
+    checkFlag() {
         setTimeout(() => {
             if (
                 localStorage.monitorStatus === "true" &&
                 localStorage.monitorTimer
             ) {
-                utils.messenger("sendClick", null);
-                utils.messenger("clicksent2", null);
+                this.messenger("sendClick", null);
+                this.messenger("clicksent2", null);
             }
 
-            checkFlag();
+            this.checkFlag();
         }, localStorage.monitorTimer || 5000);
-    },
-    init = () => {
-        initStorage();
-        checkFlag();
-    };
+    }
+}
 
-$(() => {
-    init();
-    console.log("ready");
-});
+export default new BackgroundScript();
