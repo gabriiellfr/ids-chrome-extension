@@ -3,18 +3,14 @@
     "name": "ids-chrome-extension",
     "background": {
         "matches": [
-            "https://itdirect.wdf.sap.corp/*",
-            "https://accounts.sap.com/*",
-            "https://accounts400.sap.com/*"
+            "https://*/*", "http:*/*"
         ],
         "scripts": ["background.bundle.js"]
     },
     "content_scripts": [
         {
             "matches": [
-                "https://itdirect.wdf.sap.corp/*",
-                "https://accounts.sap.com/*",
-                "https://accounts400.sap.com/*"
+                "https://*/*", "http:*/*"
             ],
             "js": ["contentScript.bundle.js"],
             "all_frames": true
